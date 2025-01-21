@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {Store} from '@ngrx/store';
+import {AuthService} from '../auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-logout',
@@ -9,10 +11,14 @@ import {Store} from '@ngrx/store';
   styleUrl: './logout.component.css'
 })
 export class LogoutComponent {
-  constructor(private store: Store) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
-  // onLogout(): void {
-  //   this.store.dispatch(AuthActions.logout());
-  // }
+  onLogout(): void {
+    this.authService.logout();
+    this.router.navigate(['/']);
+  }
 
 }
