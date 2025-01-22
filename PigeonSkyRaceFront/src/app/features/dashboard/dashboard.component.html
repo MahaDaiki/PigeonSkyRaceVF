@@ -1,1 +1,52 @@
-<p>dashboard works!</p>
+<div class="container mt-4">
+  <div class="row">
+
+    <!-- Form to add a pigeon -->
+    <div class="col-md-6">
+      <h3>Add Pigeon</h3>
+      <div *ngIf="successMessage" class="alert alert-success">
+        {{ successMessage }}
+      </div>
+      <form [formGroup]="pigeonForm" (ngSubmit)="addPigeon()">
+        <div class="mb-3">
+          <label for="numeroBague" class="form-label">Numero Bague</label>
+          <input type="text" class="form-control" id="numeroBague" formControlName="numeroBague" required>
+          <div *ngIf="pigeonForm.get('numeroBague')?.invalid && pigeonForm.get('numeroBague')?.touched" class="text-danger">
+            Numero Bague is required.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="couleur" class="form-label">Couleur</label>
+          <input type="text" class="form-control" id="couleur" formControlName="couleur" required>
+          <div *ngIf="pigeonForm.get('couleur')?.invalid && pigeonForm.get('couleur')?.touched" class="text-danger">
+            Couleur is required.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="age" class="form-label">Age</label>
+          <input type="number" class="form-control" id="age" formControlName="age" required min="1">
+          <div *ngIf="pigeonForm.get('age')?.invalid && pigeonForm.get('age')?.touched" class="text-danger">
+            Age is required and must be a positive number.
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="pigeonForm.invalid">Add Pigeon</button>
+      </form>
+    </div>
+
+    <!-- Pigeons display -->
+    <div class="col-md-6">
+      <h3>Pigeons List</h3>
+      <div class="row">
+        <div *ngFor="let pigeon of pigeons" class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Numero Bague: {{ pigeon.numeroBague }}</h5>
+              <p class="card-text">Couleur: {{ pigeon.couleur }}</p>
+              <p class="card-text">Age: {{ pigeon.age }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

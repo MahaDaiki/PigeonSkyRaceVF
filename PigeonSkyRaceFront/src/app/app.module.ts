@@ -10,16 +10,17 @@ import { DashboardComponent } from './features/dashboard/dashboard.component';
 import {AuthModule} from './auth/auth.module';
 import {InterceptorService} from './core/interceptor.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {FeaturesModule} from './features/features.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AuthModule,
+    FeaturesModule,
     HttpClientModule,
   ],
   providers: [
