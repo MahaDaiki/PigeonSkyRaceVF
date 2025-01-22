@@ -13,4 +13,5 @@ public interface PigeonService {
      List<Pigeon> getPigeonsByUserId(Long eleveurId);
      List<Pigeon> getPigeonsByIds(List<Long> pigeonIds);
      Optional<Pigeon> findPigeonByNumeroBague(String numeroBague);
+     List<Pigeon> getPigeonsByUsername(String username);
 }

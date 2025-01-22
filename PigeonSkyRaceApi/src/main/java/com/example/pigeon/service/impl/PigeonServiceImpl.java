@@ -65,6 +65,10 @@ public class PigeonServiceImpl implements PigeonService {
     public Optional<Pigeon> findPigeonByNumeroBague(String numeroBague) {
         return pigeonRepository.findByNumeroBague(numeroBague);
     }
+    @Override
+    public List<Pigeon> getPigeonsByUsername(String username) {
+        return pigeonRepository.findByEleveurUsername(username);
+    }
 
 
 }

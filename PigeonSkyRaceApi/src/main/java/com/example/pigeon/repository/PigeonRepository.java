@@ -15,4 +15,5 @@ import java.util.Optional;
 public interface PigeonRepository extends JpaRepository<Pigeon, Long> {
     List<Pigeon> findByEleveurId(Long eleveurId);
     Optional<Pigeon> findByNumeroBague(String numeroBague);
+    List<Pigeon> findByEleveurUsername(String username);
 }

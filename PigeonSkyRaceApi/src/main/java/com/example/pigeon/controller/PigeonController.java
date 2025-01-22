@@ -51,16 +51,16 @@ public class PigeonController {
     }
 
 
-//    @GetMapping("/user")
-//    public ResponseEntity<List<Pigeon>> getPigeonsByUserId(HttpSession session) {
-//        Long userId = (Long) session.getAttribute("utilisateurId");
-//
-//        if (userId == null) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//        }
-//
-//        List<Pigeon> pigeons = pigeonService.getPigeonsByUserId(userId);
-//        return ResponseEntity.ok(pigeons);
-//    }
+    @GetMapping("/user")
+    public ResponseEntity<List<Pigeon>> getPigeonsByUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        String username = authentication.getName();
+        List<Pigeon> pigeons = pigeonService.getPigeonsByUsername(username);
+        return ResponseEntity.ok(pigeons);
+    }
 
 }
