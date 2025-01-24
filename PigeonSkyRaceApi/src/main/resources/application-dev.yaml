@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/PigeonSkyRaceSecurity
     username: postgres
-    password: 123
+    password: 0074
   jpa:
     hibernate:
       ddl-auto: update
