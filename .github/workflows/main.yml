@@ -54,11 +54,14 @@ jobs:
         npm run build
 
     - name: Build and Push Docker Images
-      if: github.ref == 'refs/heads/main'
+      if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main'
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
-        docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
         docker-compose build
-        docker-compose push
+        docker tag mahadaiki/pigeon-sky-race-api:latest $DOCKER_USERNAME/pigeon-sky-race-backend:latest
+        docker tag mahadaiki/pigeon-sky-race-frontend:latest $DOCKER_USERNAME/pigeon-sky-race-frontend:latest
+        docker push $DOCKER_USERNAME/pigeon-sky-race-backend:latest
+        docker push $DOCKER_USERNAME/pigeon-sky-race-frontend:latest

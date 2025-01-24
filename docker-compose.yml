@@ -17,6 +17,7 @@ services:
 
   backend:
     build: ./PigeonSkyRaceApi
+    image: mahadaiki/pigeon-sky-race-api:latest
     ports:
       - "8080:8080"
     environment:
@@ -29,6 +30,7 @@ services:
 
   frontend:
     build: ./PigeonSkyRaceFront
+    image: mahadaiki/pigeon-sky-race-frontend:latest
     ports:
       - "4200:4200"
     depends_on:
