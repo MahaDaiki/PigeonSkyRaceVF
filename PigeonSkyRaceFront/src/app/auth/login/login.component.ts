@@ -14,6 +14,7 @@ import {Router} from '@angular/router';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  loginError: string = '';
 
   constructor(private floginb: FormBuilder,private authService: AuthService,private router: Router) {
     this.loginForm = this.floginb.group({
@@ -23,6 +24,7 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
+    this.loginError = '';
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
@@ -32,6 +34,7 @@ export class LoginComponent {
           console.log('Login successful!');
         },
         error: (err) => {
+          this.loginError = 'Wrong Credentials';
           console.error('Login failed:', err);
           alert("Wrong Credentials!");
         },

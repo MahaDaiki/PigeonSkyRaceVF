@@ -1,4 +1,7 @@
 <div class="login-container">
+  <div *ngIf="loginError" class="alert alert-danger">
+  {{ loginError }}
+</div>
   <div class="form-wrapper animate__animated animate__fadeIn">
     <h2 class="form-title text-center text-primary">Login to Pigeon Sky Race</h2>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -22,6 +25,7 @@
           placeholder="Enter your password"
         />
       </div>
+
       <div class="d-flex justify-content-between align-items-center">
         <button type="submit" class="btn btn-primary">Login</button>
         <a routerLink="/register" class="btn btn-link">Don't have an account? Register</a>

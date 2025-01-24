@@ -2,15 +2,22 @@
   <div class="form-wrapper animate__animated animate__fadeIn">
     <h2 class="form-title text-center text-primary">Register for Pigeon Sky Race</h2>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div *ngIf="registrationError" class="alert alert-danger">
+        {{ registrationError }}
+      </div>
       <div class="mb-3">
         <label for="username" class="form-label">Username</label>
         <input
           type="text"
           id="username"
           class="form-control"
+          [class.is-invalid]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
           formControlName="username"
           placeholder="Choose a username"
         />
+        <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="invalid-feedback">
+          Username is required
+        </div>
       </div>
       <div class="mb-3">
         <label for="motDePasse" class="form-label">Password</label>
@@ -18,9 +25,13 @@
           type="password"
           id="motDePasse"
           class="form-control"
+          [class.is-invalid]="registerForm.get('motDePasse')?.invalid && registerForm.get('motDePasse')?.touched"
           formControlName="motDePasse"
           placeholder="Choose a password"
         />
+        <div *ngIf="registerForm.get('motDePasse')?.invalid && registerForm.get('motDePasse')?.touched" class="invalid-feedback">
+          Password must be at least 6 characters long and contain at least one letter
+        </div>
       </div>
       <div class="mb-3">
         <label for="nom" class="form-label">Full Name</label>
@@ -28,9 +39,13 @@
           type="text"
           id="nom"
           class="form-control"
+          [class.is-invalid]="registerForm.get('nom')?.invalid && registerForm.get('nom')?.touched"
           formControlName="nom"
           placeholder="Enter your full name"
         />
+        <div *ngIf="registerForm.get('nom')?.invalid && registerForm.get('nom')?.touched" class="invalid-feedback">
+          Full name is required
+        </div>
       </div>
       <div class="mb-3">
         <label for="latitude" class="form-label">Latitude</label>
@@ -38,9 +53,13 @@
           type="number"
           id="latitude"
           class="form-control"
+          [class.is-invalid]="registerForm.get('latitude')?.invalid && registerForm.get('latitude')?.touched"
           formControlName="latitude"
           placeholder="Enter your latitude"
         />
+        <div *ngIf="registerForm.get('latitude')?.invalid && registerForm.get('latitude')?.touched" class="invalid-feedback">
+          Invalid latitude (must be between -90 and 90)
+        </div>
       </div>
       <div class="mb-3">
         <label for="longitude" class="form-label">Longitude</label>
@@ -48,9 +67,13 @@
           type="number"
           id="longitude"
           class="form-control"
+          [class.is-invalid]="registerForm.get('longitude')?.invalid && registerForm.get('longitude')?.touched"
           formControlName="longitude"
           placeholder="Enter your longitude"
         />
+        <div *ngIf="registerForm.get('longitude')?.invalid && registerForm.get('longitude')?.touched" class="invalid-feedback">
+          Invalid longitude (must be between -180 and 180)
+        </div>
       </div>
       <div class="d-flex justify-content-between align-items-center">
         <button type="submit" class="btn btn-primary">Register</button>
@@ -59,5 +82,3 @@
     </form>
   </div>
 </div>
-
-

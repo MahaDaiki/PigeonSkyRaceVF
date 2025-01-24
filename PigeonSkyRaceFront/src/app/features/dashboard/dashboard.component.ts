@@ -12,41 +12,67 @@ import {FeaturesService} from '../features.service';
 export class DashboardComponent {
   pigeons: any[] = [];
   pigeonForm: FormGroup;
+  isAuthenticated: boolean = false;
   successMessage: string | null = null;
+  errorMessage: string | null = null;
 
   constructor(private featuresService: FeaturesService, private fb: FormBuilder) {
     this.pigeonForm = this.fb.group({
-      numeroBague: ['', [Validators.required]],
+      numeroBague: ['', [
+        Validators.required,
+        Validators.pattern(/^[mf][0-9]+$/),
+      ],
+      ],
       couleur: ['', [Validators.required]],
       age: ['', [Validators.required, Validators.min(1)]]
     });
   }
 
   ngOnInit(): void {
+    this.checkAuthentication();
     this.getPigeons();
   }
 
+  checkAuthentication(): void {
+    this.isAuthenticated = !!localStorage.getItem('authToken');
+  }
 
   getPigeons(): void {
-    this.featuresService.getPigeons().subscribe((data) => {
-      this.pigeons = data;
+    this.featuresService.getPigeons().subscribe({
+      next: (data) => {
+        this.pigeons = data;
+      },
+      error: (error) => {
+        console.error('Error fetching pigeons:', error);
+        this.errorMessage = 'Failed to load pigeons. Please try again later.';
+      }
     });
   }
 
-  // Method to add a pigeon using the reactive form data
+
   addPigeon(): void {
-    console.log(this.pigeonForm.value);
-    if (this.pigeonForm.valid) {
-      this.featuresService.addPigeon(this.pigeonForm.value).subscribe(
-        (message) => {
-          this.successMessage = message;
-          this.getPigeons();
-          this.pigeonForm.reset();
-        },
-        (error) => {
-          console.error('Error adding pigeon', error);
-        }
-      );
+    if (this.pigeonForm.invalid) {
+      this.errorMessage = 'Please fill in all fields correctly.';
+      return;
     }
+
+    if (!this.isAuthenticated) {
+      this.errorMessage = 'You must be authenticated to add a pigeon.';
+      return;
+    }
+
+    this.featuresService.addPigeon(this.pigeonForm.value).subscribe({
+      next: () => {
+        this.successMessage = 'Pigeon added successfully!';
+        this.errorMessage = null;
+        this.getPigeons();
+        this.pigeonForm.reset();
+      },
+      error: (error) => {
+        console.error('Error adding pigeon:', error);
+        this.successMessage = null;
+        this.errorMessage = 'Failed to add pigeon. Please try again later.';
+      }
+    });
   }
 }
